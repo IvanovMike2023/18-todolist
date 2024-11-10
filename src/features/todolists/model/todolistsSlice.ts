@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit"
 import { ResultCode } from "common/enums"
 import { handleServerAppError, handleServerNetworkError } from "common/utils"
 import { Dispatch } from "redux"
@@ -57,6 +57,9 @@ export const todolistsSlice = createSlice({
 })
 
 // Thunks
+export const fetchTodolistsTC1=createAsyncThunk('todolists/fetchTodolistsTC',(arg, thunkAPI)=>{
+  const {dispatch} = thunkAPI
+})
 export const fetchTodolistsTC = () => (dispatch: Dispatch) => {
   dispatch(setAppStatus({ status: "loading" }))
   todolistsApi

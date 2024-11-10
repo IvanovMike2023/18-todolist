@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit"
 import { ResultCode } from "common/enums"
 import { handleServerAppError, handleServerNetworkError } from "common/utils"
 import { Dispatch } from "redux"
@@ -57,8 +57,22 @@ export const tasksSlice = createSlice({
   },
 })
 
+export const fetchTasksTC = createAsyncThunk('tasks/fetchTasksTC',(todolistId:string, thunkAPI)=>{
+    const {dispatch} = thunkAPI
+    dispatch(setAppStatus({ status: "loading" }))
+    tasksApi
+        .getTasks(todolistId)
+        .then((res) => {
+            dispatch(setAppStatus({ status: "succeeded" }))
+            dispatch(setTasks({ todolistId, tasks: res.data.items }))
+        })
+        .catch((error) => {
+            handleServerNetworkError(error, dispatch)
+        })
+
+})
 // Thunks
-export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
+ export const fetchTasksTC1 = (todolistId: string) => (dispatch: Dispatch) => {
   dispatch(setAppStatus({ status: "loading" }))
   tasksApi
     .getTasks(todolistId)
