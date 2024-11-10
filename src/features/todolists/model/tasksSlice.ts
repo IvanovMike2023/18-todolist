@@ -57,7 +57,7 @@ export const tasksSlice = createSlice({
   },
 })
 
-export const fetchTasksTC = createAsyncThunk('tasks/fetchTasksTC',(todolistId:string, thunkAPI)=>{
+export const fetchTasks = createAsyncThunk('tasks/fetchTasksTC',(todolistId:string, thunkAPI)=>{
     const {dispatch} = thunkAPI
     dispatch(setAppStatus({ status: "loading" }))
     tasksApi
@@ -159,3 +159,4 @@ export const updateTaskTC =
 export const { setTasks, removeTask, addTask, clearTasks, updateTask } = tasksSlice.actions
 export const { selectTasks } = tasksSlice.selectors
 export const tasksReducer = tasksSlice.reducer
+export const taskThunks = {fetchTasks}
