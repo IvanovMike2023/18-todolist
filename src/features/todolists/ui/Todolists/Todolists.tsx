@@ -4,9 +4,11 @@ import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "common/hooks"
 import { fetchTodolistsTC, selectTodolists } from "../../model/todolistsSlice"
 import { Todolist } from "./Todolist/Todolist"
+import {useGetTodolistsQuery} from "../../api/_todolistsApi";
 
 export const Todolists = () => {
   const todolists = useAppSelector(selectTodolists)
+  //const {data: todolists} = useGetTodolistsQuery()
 
   const dispatch = useAppDispatch()
 
