@@ -56,7 +56,6 @@ const slice = createSlice({
                 return {};
             })
             .addCase(fetchTasks.fulfilled,(state, action)=>{
-               // console.log(action.payload.todolistId)
                 state[action.payload.todolistId] = action.payload.tasks;
             })
     },
