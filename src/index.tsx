@@ -250,104 +250,104 @@
 // В качестве ответа укажите исправленную версию строки
 //
 // 🖥 Пример ответа: delete goodMorning
-import React, { useEffect } from "react";
-import ReactDOM from "react-dom/client";
-import { ThunkAction, ThunkDispatch } from "redux-thunk";
-import { Provider, TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
-
-type UserType = {
-    id: string;
-    name: string;
-    age: number;
-};
-
-// API
-const instance = axios.create({ baseURL: "https://exams-frontend.kimitsu.it-incubator.io/api/" });
-
-const api = {
-    getUsers(pageNumber: number) {
-        return instance.get(`users?pageSize=${3}&pageNumber=${pageNumber}`);
-    },
-};
-
-// Reducer
-const initState = { page: 1, users: [] as UserType[] };
-type InitStateType = typeof initState;
-
-const appReducer = (state: InitStateType = initState, action: ActionsType): InitStateType => {
-    switch (action.type) {
-        case "SET_PAGE":
-            console.log(action)
-            return { ...state, page: action.page };
-        case "SET_USERS":
-            return { ...state, users: action.users };
-        default:
-            return state;
-    }
-};
-
-// Store
-const rootReducer = combineReducers({ app: appReducer });
-
-const store = configureStore({ reducer: rootReducer });
-type RootState = ReturnType<typeof store.getState>;
-type AppDispatch = ThunkDispatch<RootState, unknown, ActionsType>;
-type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, ActionsType>;
-const useAppDispatch = () => useDispatch<AppDispatch>();
-const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-
-const setPageAC = (page: number) => ({ type: "SET_PAGE", page }) as const;
-const setUsersAC = (users: UserType[]) => ({ type: "SET_USERS", users }) as const;
-type ActionsType = ReturnType<typeof setPageAC> | ReturnType<typeof setUsersAC>;
-
-const getUsers = (): AppThunk => (dispatch, getState) => {
-    const page = getState().app.page;//!!!!!
-    api.getUsers(page).then((res) => dispatch(setUsersAC(res.data.items)));
-};
-
-// Components
-export const App = () => {
-    const page = useAppSelector((state) => state.app.page);
-    const users = useAppSelector((state) => state.app.users);
-
-    const dispatch = useAppDispatch();
-
-    useEffect(() => {
-        dispatch(getUsers());
-    }, [page]);
-
-    const pages = new Array(4).fill(1).map((p, i) => (
-        <button key={i} onClick={() => dispatch(setPageAC(i + 1))} disabled={page === i + 1}>
-            {i + 1}
-        </button>
-    ));
-    return (
-        <div>
-            {users.map((u) => {
-                return (
-                    <div style={{ marginBottom: "25px" }} key={u.id}>
-                        <p>
-                            <b>name</b>: {u.name}
-                        </p>
-                        <p>
-                            <b>age</b>: {u.age}
-                        </p>
-                    </div>
-                );
-            })}
-            {pages}
-        </div>
-    );
-};
-
-const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
-root.render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
-);
+// import React, { useEffect } from "react";
+// import ReactDOM from "react-dom/client";
+// import { ThunkAction, ThunkDispatch } from "redux-thunk";
+// import { Provider, TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+// import axios from "axios";
+// import { configureStore, combineReducers } from "@reduxjs/toolkit";
+//
+// type UserType = {
+//     id: string;
+//     name: string;
+//     age: number;
+// };
+//
+// // API
+// const instance = axios.create({ baseURL: "https://exams-frontend.kimitsu.it-incubator.io/api/" });
+//
+// const api = {
+//     getUsers(pageNumber: number) {
+//         return instance.get(`users?pageSize=${3}&pageNumber=${pageNumber}`);
+//     },
+// };
+//
+// // Reducer
+// const initState = { page: 1, users: [] as UserType[] };
+// type InitStateType = typeof initState;
+//
+// const appReducer = (state: InitStateType = initState, action: ActionsType): InitStateType => {
+//     switch (action.type) {
+//         case "SET_PAGE":
+//             console.log(action)
+//             return { ...state, page: action.page };
+//         case "SET_USERS":
+//             return { ...state, users: action.users };
+//         default:
+//             return state;
+//     }
+// };
+//
+// // Store
+// const rootReducer = combineReducers({ app: appReducer });
+//
+// const store = configureStore({ reducer: rootReducer });
+// type RootState = ReturnType<typeof store.getState>;
+// type AppDispatch = ThunkDispatch<RootState, unknown, ActionsType>;
+// type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, ActionsType>;
+// const useAppDispatch = () => useDispatch<AppDispatch>();
+// const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+//
+// const setPageAC = (page: number) => ({ type: "SET_PAGE", page }) as const;
+// const setUsersAC = (users: UserType[]) => ({ type: "SET_USERS", users }) as const;
+// type ActionsType = ReturnType<typeof setPageAC> | ReturnType<typeof setUsersAC>;
+//
+// const getUsers = (): AppThunk => (dispatch, getState) => {
+//     const page = getState().app.page;//!!!!!
+//     api.getUsers(page).then((res) => dispatch(setUsersAC(res.data.items)));
+// };
+//
+// // Components
+// export const App = () => {
+//     const page = useAppSelector((state) => state.app.page);
+//     const users = useAppSelector((state) => state.app.users);
+//
+//     const dispatch = useAppDispatch();
+//
+//     useEffect(() => {
+//         dispatch(getUsers());
+//     }, [page]);
+//
+//     const pages = new Array(4).fill(1).map((p, i) => (
+//         <button key={i} onClick={() => dispatch(setPageAC(i + 1))} disabled={page === i + 1}>
+//             {i + 1}
+//         </button>
+//     ));
+//     return (
+//         <div>
+//             {users.map((u) => {
+//                 return (
+//                     <div style={{ marginBottom: "25px" }} key={u.id}>
+//                         <p>
+//                             <b>name</b>: {u.name}
+//                         </p>
+//                         <p>
+//                             <b>age</b>: {u.age}
+//                         </p>
+//                     </div>
+//                 );
+//             })}
+//             {pages}
+//         </div>
+//     );
+// };
+//
+// const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+// root.render(
+//     <Provider store={store}>
+//         <App />
+//     </Provider>,
+// );
 
 // 📜 Описание:
 // При переходе по страницам должны подгружаться новые пользователи.
@@ -421,7 +421,7 @@ root.render(
 //     const [name, setName] = useState("");
 //     const [timerId, setTimerId] = useState(0);
 //     useEffect(() => {
-//
+//         clearTimeout(timerId)//!!!
 //         setTimerId(
 //             +setTimeout(() => {
 //                 dispatch(getFriends(name));
@@ -465,7 +465,7 @@ root.render(
 // 🖥 Пример ответа: value={name(1500)}
 // import React from 'react'
 // import ReactDOM from 'react-dom/client';
-//
+//123
 // export const App = () => {
 //     return (
 //         <div>
@@ -550,8 +550,8 @@ root.render(
 //         .map((w: string, i: number) => <div key={i}>{w}</div>);
 //
 //     const onChangeHandler = (value: string) => {
-//         console.log(value);
-//         //dispatch(setFind (value))
+//        //!!!!!
+//         dispatch(setFind (value))
 //     };
 //
 //     return (
@@ -593,8 +593,8 @@ root.render(
 //
 // const api = {
 //     getUsers() {
-//       //  return instance.get(`users?pageSize=${users.id}&pageNumber=2`)
-//         return instance.get('users?pageSize=3&pageNumber=2')
+//          return instance.get('users',{params:{pageSize:3,pageNumber:2}})
+//        // return instance.get('users?pageSize=3&pageNumber=2')
 //     },
 // }
 //
@@ -644,7 +644,7 @@ root.render(
 // export const App = () => {
 //     return (
 //         <div>
-//             <h2>Сколько всего веток может быть в репозитории ?</h2>
+//             <h2>Сколько всего веток может быть в репозитории ?</h2>//4
 //             <ul>
 //                 <li>1 - 2 ветки. master(main) и develop</li>
 //                 <li>2 - Число веток согласовывается в команде разработчиков и устанавливается в git config</li>
