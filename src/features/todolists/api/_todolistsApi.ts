@@ -54,6 +54,7 @@ export const todolistsApi = createApi({
         }
       }
     }),
+
     DeleteTodolist:build.mutation<BaseResponse,{id:string}>({
         query:({id})=>{
           return{
