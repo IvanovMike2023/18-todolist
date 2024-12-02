@@ -10,8 +10,7 @@ import { useAppDispatch, useAppSelector } from "common/hooks"
 import { getTheme } from "common/theme"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { Navigate } from "react-router-dom"
-import { selectThemeMode } from "../../../../app/appSlice"
-import { loginTC, selectIsLoggedIn } from "../../model/authSlice"
+import {loginTC, selectIsLoggedIn, selectThemeMode} from "../../../../app/appSlice"
 import s from "./Login.module.css"
 
 type Inputs = {
