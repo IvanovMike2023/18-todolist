@@ -12,7 +12,7 @@ type Props = {
 }
 
 export const Tasks = ({todolist}: Props) => {
-    const tasks = useAppSelector(selectTasks)
+   // const tasks = useAppSelector(selectTasks)
     const {data} = useGetTasksQuery(todolist.id)
     const dispatch = useAppDispatch()
 

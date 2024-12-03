@@ -20,6 +20,7 @@ export const tasksSlice = createSlice({
             state[action.payload.todolistId] = action.payload.tasks
         }),
         removeTask: create.reducer<{ taskId: string; todolistId: string }>((state, action) => {
+            debugger
             const tasks = state[action.payload.todolistId]
             const index = tasks.findIndex((t) => t.id === action.payload.taskId)
             if (index !== -1) {
