@@ -1,9 +1,7 @@
-import { instance } from "common/instance"
-import { BaseResponse } from "common/types"
-import { LoginArgs } from "./authAPI.types"
+import {instance} from "common/instance"
+import {BaseResponse} from "common/types"
+import {LoginArgs} from "./authAPI.types"
 import {baseApi} from "../../../app/baseApi";
-import {DomainTodolist} from "../../todolists/model/todolistsSlice";
-import {Todolist} from "../../todolists/api/todolistsApi.types";
 
 export const _authApi = {
   login(payload: LoginArgs) {
@@ -23,11 +21,11 @@ export const authApi = baseApi.injectEndpoints({
      // providesTags: ['Auth'],
     }),
     login: build.mutation<BaseResponse<{ userId: number; token: string }>, LoginArgs >({
-      query: (payload) => {
+      query: payload => {
         return {
           url: 'auth/login',
           method: 'POST',
-          body: {payload}
+          body: payload
         }
       },
      // invalidatesTags: ['Auth']
